@@ -27,6 +27,24 @@ module.exports = function (eleventyConfig) {
     }
   }
 
+  const markdownOpcodeTableCfg = {
+    render: (tokens, idx, _options, env, slf) => {
+      if (tokens[idx].nesting === 1) {
+        tokens[idx].attrJoin('class', 'opcode_table')
+      }
+      return slf.renderToken(tokens, idx, _options, env, slf)
+    }
+  }
+
+  const markdownOpcodeListingCfg = {
+    render: (tokens, idx, _options, env, slf) => {
+      if (tokens[idx].nesting === 1) {
+        tokens[idx].attrJoin('class', 'opcode_listing')
+      }
+      return slf.renderToken(tokens, idx, _options, env, slf)
+    }
+  }
+
   const slugify = (s) => {
     // Slugs should not contain URI-encoded characters (which is the default); just get rid of them.
     return s
@@ -76,6 +94,8 @@ module.exports = function (eleventyConfig) {
     .use(markdownItContainer, 'info', markdownItContainerCfg('info'))
     .use(markdownItContainer, 'tip', markdownItContainerCfg('tip'))
     .use(markdownItContainer, 'todo', markdownItContainerCfg('todo'))
+    .use(markdownItContainer, 'opcode_table', markdownOpcodeTableCfg)
+    .use(markdownItContainer, 'opcode_listing', markdownOpcodeListingCfg)
 
   eleventyConfig.setLibrary('md', markdownLibrary)
 
