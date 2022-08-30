@@ -8,6 +8,7 @@ const markdownItContainer = require('markdown-it-container')
 const markdownItFootnote = require('markdown-it-footnote')
 const markdownItTOC = require('markdown-it-table-of-contents')
 const markdownItReplaceLink = require('markdown-it-replace-link')
+const markdownItOpcodes = require('./js/markdown-it-opcodes')
 const nunjucks = require('nunjucks')
 const loadLanguages = require('prismjs/components/')
 
@@ -27,21 +28,14 @@ module.exports = function (eleventyConfig) {
     }
   }
 
-  const markdownOpcodeTableCfg = {
-    render: (tokens, idx, _options, env, slf) => {
-      if (tokens[idx].nesting === 1) {
-        tokens[idx].attrJoin('class', 'opcode_table')
+  const markdownItContainerAddClass = (className) => {
+    return {
+      render: (tokens, idx, _options, env, slf) => {
+        if (tokens[idx].nesting === 1) {
+          tokens[idx].attrJoin('class', className)
+        }
+        return slf.renderToken(tokens, idx, _options, env, slf)
       }
-      return slf.renderToken(tokens, idx, _options, env, slf)
-    }
-  }
-
-  const markdownOpcodeListingCfg = {
-    render: (tokens, idx, _options, env, slf) => {
-      if (tokens[idx].nesting === 1) {
-        tokens[idx].attrJoin('class', 'opcode_listing')
-      }
-      return slf.renderToken(tokens, idx, _options, env, slf)
     }
   }
 
@@ -94,8 +88,9 @@ module.exports = function (eleventyConfig) {
     .use(markdownItContainer, 'info', markdownItContainerCfg('info'))
     .use(markdownItContainer, 'tip', markdownItContainerCfg('tip'))
     .use(markdownItContainer, 'todo', markdownItContainerCfg('todo'))
-    .use(markdownItContainer, 'opcode_table', markdownOpcodeTableCfg)
-    .use(markdownItContainer, 'opcode_listing', markdownOpcodeListingCfg)
+    .use(markdownItContainer, 'opcode_table', markdownItContainerAddClass('opcode_table'))
+    .use(markdownItContainer, 'opcode_listing', markdownItContainerAddClass('opcode_listing'))
+    .use(markdownItOpcodes)
 
   eleventyConfig.setLibrary('md', markdownLibrary)
 
