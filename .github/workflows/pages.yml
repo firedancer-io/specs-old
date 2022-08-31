@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+    - 'docs/**'
+    - '.github/workflows/pages.yml'
+  pull_request:
+    paths:
+    - 'docs/**'
+    - '.github/workflows/pages.yml'
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: docs
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: npm
+        cache-dependency-path: docs/package-lock.json
+    - run: npm ci
+    - run: npm run build
+    - uses: actions/upload-pages-artifact@v1
+      with:
+        path: docs/.site/_output
+
+  deploy-pages:
+    runs-on: ubuntu-22.04
+    needs: build-docs
+    permissions:
+      pages: write     # to deploy to Pages
+      id-token: write  # to verify the deployment originates from an appropriate source
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/deploy-pages@v1
+      id: deployment
