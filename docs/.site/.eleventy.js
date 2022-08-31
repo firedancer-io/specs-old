@@ -8,7 +8,7 @@ const markdownItContainer = require('markdown-it-container')
 const markdownItFootnote = require('markdown-it-footnote')
 const markdownItTOC = require('markdown-it-table-of-contents')
 const markdownItReplaceLink = require('markdown-it-replace-link')
-const markdownItOpcodes = require('./js/markdown-it-opcodes')
+const markdownItOpcodes = require('./_js/markdown-it-opcodes')
 const nunjucks = require('nunjucks')
 const loadLanguages = require('prismjs/components/')
 
