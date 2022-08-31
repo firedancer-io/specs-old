@@ -27,6 +27,14 @@ Arrays are serialized inline, prefixed by their length.
 ```c
 typedef uint8_t sol_pubkey_t[32];
 typedef uint8_t sol_hash_t[32];
+typedef uint8_t sol_signature_t[64];
+
+struct sol_transaction {
+  uint8_t         num_signatures;
+  sol_signature_t signatures[];
+
+  struct sol_message message;
+};
 
 struct sol_message {
   struct sol_message_header header;
@@ -42,14 +50,14 @@ struct sol_message {
   // if(header.versioned)
   uint8_t                   num_address_lookups;
   struct sol_address_lookup address_lookups[];
-}
+};
 
 struct sol_message_header {
   bool versioned : 1; // MSB
   uint8_t num_required_signatures : 7;
   uint8_t num_readonly_signed_accounts;
   uint8_t num_readonly_unsigned_accounts;
-}
+};
 static_assert(sizeof(sol_message_header) == 3);
 
 struct sol_instruction {
@@ -60,7 +68,7 @@ struct sol_instruction {
 
   uint8_t data_len;
   uint8_t data[];
-}
+};
 
 struct sol_address_lookup {
   sol_pubkey_t account_key;
@@ -68,5 +76,5 @@ struct sol_address_lookup {
   uint8_t writable_indexes[];
   uint8_t num_readonly_indexes;
   uint8_t readonly_indexes[];
-}
+};
 ```
