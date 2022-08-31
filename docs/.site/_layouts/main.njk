@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/css/layout.css?{{ "" | cachebuster }}">
-	<link rel="stylesheet" href="/css/nav.css?{{ "" | cachebuster }}">
-	<link rel="stylesheet" href="/css/style.css?{{ "" | cachebuster }}">
-	<link rel="stylesheet" href="/css/prismjs@1.24-themes-prism.css">
+	<link rel="stylesheet" href="{{ '/css/layout.css' | url }}?{{ "" | cachebuster }}">
+	<link rel="stylesheet" href="{{ '/css/nav.css' | url }}?{{ "" | cachebuster }}">
+	<link rel="stylesheet" href="{{ '/css/style.css' | url }}?{{ "" | cachebuster }}">
+	<link rel="stylesheet" href="{{ '/css/prismjs@1.24-themes-prism.css' | url }}">
 	<title>{{ title }} 🔥💃</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
 				<path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
 			</svg>
 		</div>
-		<a href="/" class="logo">🔥💃</a>
+		<a href="{{ '/' | url }}" class="logo">🔥💃</a>
 		<aside id=breadcrumbs>
 			{% macro breadcrumb(path) -%}
 			{%- if path != "/" %}

@@ -26,7 +26,7 @@ jobs:
         cache: npm
         cache-dependency-path: docs/package-lock.json
     - run: npm ci
-    - run: npm run build
+    - run: npm run build -- --pathprefix '/specs'
     - uses: actions/upload-pages-artifact@v1
       with:
         path: docs/.site/_output
