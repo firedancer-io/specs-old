@@ -1,5 +1,5 @@
 ---
-title: "Syscalls"
+title: Syscalls
 eleventyNavigation:
   order: 30
 ---

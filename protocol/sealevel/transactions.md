@@ -1,18 +1,20 @@
 ---
-title: "Transactions"
+title: Transactions
 eleventyNavigation:
   order: 50
   synopsys: |
     Facility for invoking Sealevel programs
 ---
 
-# Transactions
+Transactions
+============
 
 :::todo
 what are transactions
 :::
 
-## Serialization
+Serialization
+-------------
 
 The canonical transaction serialization follows [bincode v1] fixed-integer encoding.
 

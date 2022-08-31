@@ -2,11 +2,13 @@
 title: Gossip
 ---
 
-# Gossip Protocol
+Gossip Protocol
+===============
 
 The gossip protocol serves to synchronize the cluster-replicated data store (CRDS) between nodes.
 
-## Networking
+Networking
+----------
 
 Gossip messages use the UDP protocol.
 
@@ -20,7 +22,8 @@ struct fd_gossip_msg_header {
 }
 ```
 
-## Pull mode
+Pull mode
+---------
 
 Nodes can request CRDS entries by sending pull requests.
 
@@ -33,7 +36,8 @@ Nodes can request CRDS entries by sending pull requests.
 bloom filters and pull req / pull resp
 :::
 
-## Push mode
+Push mode
+---------
 
 ```c
 #define FD_GOSSIP_MSGID_PUSH  2
@@ -44,7 +48,8 @@ bloom filters and pull req / pull resp
 push / prune
 :::
 
-## Ping protocol
+Ping protocol
+-------------
 
 The ping protocol probes whether a node identity is online interactively.
 

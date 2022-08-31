@@ -1,5 +1,5 @@
 ---
-title: "Instruction Set"
+title: Instruction Set
 eleventyNavigation:
   order: 20
 ---
@@ -9,7 +9,8 @@ Sealevel Bytecode Format
 
 Sealevel Bytecode Format (SBF) derives from the eBPF little-endian architecture.
 
-## Instruction Frame
+Instruction Frame
+-----------------
 
 Bytecode is encoded using frames of 64 bits.
 
@@ -25,7 +26,8 @@ low byte                                  high byte
 
 Field values are encoded in little-endian byte order and MSB-first bit order.
 
-## Registers
+Registers
+---------
 
 The SBF VM has 12 registers, including 10 general-purpose registers (GPRs).
 
@@ -45,7 +47,8 @@ The SBF VM has 12 registers, including 10 general-purpose registers (GPRs).
 | `r11` | Stack pointer   | Special    | 8 bytes | System register                    |
 |  `pc` | Program counter | None       | 8 bytes | Hidden register                    |
 
-## Static Verifier
+Static Verifier
+---------------
 
 The static verifier checks whether a blob of bytecode is well formed.
 It iterates over all instruction frames in a single pass.
@@ -70,7 +73,8 @@ If any instruction violates these rules, the bytecode is considered invalid.
 Detail changes between bpfel, SBF, and SBFv2
 :::
 
-## Opcode Lists
+Opcode Lists
+------------
 
 The following tables list all opcodes and their static constraints.
 
@@ -96,6 +100,7 @@ The following tables list all opcodes and their static constraints.
 |  D· |  -  |  -   |  -  |  -   |   le   | jsle |  -  |   -    |  -   |   -   |  -   |   -   |   be   | jsle  |  -  |   -    |
 |  E· |  -  |  -   |  -  |  -   | sdiv32 |  -   |  -  | sdiv64 |  -   |   -   |  -   |   -   | sdiv32 |   -   |  -  | sdiv64 |
 |  F· |  -  |  -   |  -  |  -   |   -    |  -   |  -  |   -    |  -   |   -   |  -   |   -   |   -    |   -   |  -  |   -    |
+
 :::
 
 ### Memory access opcodes
@@ -181,7 +186,9 @@ The following tables list all opcodes and their static constraints.
 | `0xe7` | sdiv64 | `dst64, imm64` | `imm≠0`            |
 | `0xec` | sdiv32 | `dst32, src32` |                    |
 | `0xef` | sdiv64 | `dst64, src64` |                    |
+
 :::
+
 ### Control flow opcodes
 
 :::opcode_listing
@@ -211,6 +218,7 @@ The following tables list all opcodes and their static constraints.
 | `0xcd` | jslt | `dst64, src64, off` |
 | `0xd5` | jsle | `dst64, imm64, off` |
 | `0xdd` | jsle | `dst64, src64, off` |
+
 :::
 
 ### Call opcodes
@@ -222,6 +230,7 @@ The following tables list all opcodes and their static constraints.
 | `0x85` |  call | `imm64`  |
 | `0x8d` | callx | `reg64`  | `imm∈[0,9]` |
 | `0x95` |  exit |          |
+
 :::
 
 ### Notation
@@ -288,7 +297,8 @@ src8      := lower(regs[src_reg],  8)
       assert(sign_extend_64_32(0x0000_0003) == 0x0000_0000_0000_0003)
       assert(sign_extend_64_32(0xfeee_eee3) == 0xffff_ffff_feee_eee3)
 
-## Function calls
+Function calls
+--------------
 
 :::todo
 call and callx effects on r10 and shadow stack

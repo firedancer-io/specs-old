@@ -1,8 +1,8 @@
 ---
-title: "P2P"
+title: P2P
 eleventyNavigation:
   order: 30
 ---
 
-Sealevel Runtime
-================
+Peer-to-peer protocols
+======================
