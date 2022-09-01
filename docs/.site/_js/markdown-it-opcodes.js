@@ -34,7 +34,7 @@ function newColumnTracker() {
 }
 
 // Wraps an inline token in an "a" tag.
-function makeLink(token, attrs) {
+function makeLink(token, attrs, text) {
   token.block = true;
   token.children = [
     {
@@ -44,7 +44,7 @@ function makeLink(token, attrs) {
     },
     {
       type: "text",
-      content: token.content,
+      content: text || token.content,
     },
     {
       type: "link_close",
@@ -68,17 +68,27 @@ module.exports = function (md) {
     makeLink(token, [["href", "#" + token.content]]);
   }
 
+  // Create local refs from syscall listing to detail sections
+  function syscallToRefLink(token) {
+    const content = token.content;
+    token.content = `[${content}](#${content.slice(1, -1)})`;
+  }
+
   md.core.ruler.after("block", "opcode_listing_anchors", function (state) {
     const inOpcodeListing = groupFilter("container_opcode_listing");
     const inOpcodeTable = groupFilter("container_opcode_table");
+    const inSyscallListing = groupFilter("container_syscall_listing");
     const inTbody = groupFilter("tbody");
-    const column = newColumnTracker();
+    const getColumn = newColumnTracker();
 
     for (const token of state.tokens) {
-      if (inOpcodeListing(token) && inTbody(token) && column(token) == 1) {
+      const column = getColumn(token);
+      if (inOpcodeListing(token) && inTbody(token) && column == 1) {
         opcodeToAnchorLink(token);
-      } else if (inOpcodeTable(token) && inTbody(token) && column(token) > 1) {
+      } else if (inOpcodeTable(token) && inTbody(token) && column > 1) {
         opcodeToRefLink(token);
+      } else if (inSyscallListing(token) && inTbody(token) && column == 1) {
+        syscallToRefLink(token);
       }
     }
   });
